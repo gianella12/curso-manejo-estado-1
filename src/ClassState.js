@@ -1,7 +1,7 @@
 import React from 'react';
 class ClassState extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             error: false,
         }
@@ -15,7 +15,10 @@ class ClassState extends React.Component {
                 {this.state.error && (<p>Error: el código es incorrecto</p>)}
 
                 <input placeholder="Código de seguridad" />
-                <button>Comprobar</button>
+                <button onClick={() =>
+                    this.setState(prevState => ({ error: !prevState.error }))}>
+                    Comprobar
+                </button>
             </div>
         );
     }
