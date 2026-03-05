@@ -11,17 +11,8 @@ class ClassState extends React.Component {
             loading: false,
         }
     }
-    // componentWillMount()
-    //     UNSAFE_componentWillMount(){
-    //     console.log("componentWillMount")
-    // }
 
-    // componentDidMount(){
-    //     console.log("componentDidMount")
-    // }
     componentDidUpdate() {
-        console.log("actualizacion")
-
         if (!!this.state.loading) {
             setTimeout(() => {
                 this.setState({ error: false });
@@ -48,6 +39,7 @@ class ClassState extends React.Component {
                     placeholder="Código de seguridad"
                     value={this.state.value}
                     onChange={(e) => this.setState({ value: e.target.value })}
+                    disabled={this.state.loading}
                 />
                 <button onClick={() =>
                     this.setState({ loading: true })}>

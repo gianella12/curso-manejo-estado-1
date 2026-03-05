@@ -3,28 +3,28 @@ import { useEffect, useState } from "react";
 const SECURITY_CODE = "paradigma";
 
 function UseState({ name }) {
-    const [value, setValue] = useState("");
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [state, setState]= useState({
+        value: "",
+        error: false,
+        loading: false,
+    });
+    // const [value, setValue] = useState("");
+    // const [error, setError] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
-    console.log(value)
     useEffect(() => {
-        console.log("Empezando el efecto");
-        if (!!loading) {
-            setError(false);
+        if (!!state.loading) {
+            setState(prevState => ({ ...prevState, error: false }));
             setTimeout(() => {
-                console.log("Haciendo la validación");
-                if (value !== SECURITY_CODE) {
-                    setError(true);
+                
+                if (state.value !== SECURITY_CODE) {
+                    setState(prevState => ({ ...prevState, error: true }));
                 }
-                setLoading(false);
+                setState(prevState => ({ ...prevState, loading: false }));
 
-
-                console.log("Terminando la validación");
             }, 3000);
         }
-        console.log("Terminando el efecto");
-    }, [loading, value]);
+    }, [state.loading, state.value]);
 
     return (
         <div>
@@ -32,18 +32,18 @@ function UseState({ name }) {
 
             <p>Por favor, escribe el codigo de seguridad.</p>
 
-            {(error && !loading) &&
+            {(state.error && !state.loading) &&
                 (<p>Error: el código es incorrecto</p>)}
 
-            {loading &&
+            {state.loading &&
                 (<p>cargando...</p>)}
 
             <input
                 placeholder="Código de seguridad"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
+                value={state.value}
+                onChange={(e) => setState(prevState => ({ ...prevState, value: e.target.value }))}
             />
-            <button onClick={() => setLoading(!loading)}>
+            <button onClick={() => setState(prevState => ({ ...prevState, loading: !prevState.loading }))}>
                 Comprobar
             </button>
         </div>
